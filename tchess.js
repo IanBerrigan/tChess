@@ -1,14 +1,5 @@
 //TODO
-//what if I don't need DNS?
-//website with rules
 //AI
-//AWS
-//self play?
-//repeat tweets - user and bot
-//delete pictures
-//automated testing
-//more than 20 mentions
-//Help command/image
 var AWS = require('aws-sdk');
 AWS.config.update({region:'us-east-1'});
 var documentClient = new AWS.DynamoDB.DocumentClient();
@@ -205,21 +196,21 @@ function parseMention(tweet){
 
     getGame(req);
   }
-  else if(command === "pdraw"){
-    console.log("pdraw");
-    req.action = "pdraw";
+  else if(command === "proposedraw"){
+    console.log("proposedraw");
+    req.action = "proposedraw";
 
     getGame(req);
   }
-  else if(command === "adraw"){
-    console.log("adraw");
-    req.action = "adraw";
+  else if(command === "acceptdraw"){
+    console.log("acceptdraw");
+    req.action = "acceptdraw";
 
     getGame(req);
   }
-  else if(command === "ddraw"){
-    console.log("ddraw");
-    req.action = "ddraw";
+  else if(command === "declinedraw"){
+    console.log("declinedraw");
+    req.action = "declinedraw";
 
     getGame(req);
   }
@@ -380,7 +371,7 @@ function getGame(req){
           deleteGame(req);
         }
       }
-      else if(req.action === "pdraw"){
+      else if(req.action === "proposedraw"){
         if(data.Item.state !== "waitingAccept"){
           req.game = data.Item;
           if(req.game.hasOwnProperty("pDraw")){
@@ -391,7 +382,7 @@ function getGame(req){
           updateGame(req);
         }
       }
-      else if(req.action === "adraw"){
+      else if(req.action === "acceptdraw"){
         if(data.Item.state !== "waitingAccept"){
           req.game = data.Item;
           if(!req.game.hasOwnProperty("pDraw")){
@@ -403,7 +394,7 @@ function getGame(req){
           }
         }
       }
-      else if(req.action === "ddraw"){
+      else if(req.action === "declinedraw"){
         if(data.Item.state !== "waitingAccept"){
           req.game = data.Item;
           if(!req.game.hasOwnProperty("pDraw")){
@@ -509,8 +500,8 @@ function updateGame(req){
         if (req.action === "invite") sendTweet(req); 
         if (req.action === "accept") sendBoard(req); 
         if (req.action === "move") sendBoard(req); 
-        if (req.action === "pdraw") sendTweet(req); 
-        if (req.action === "ddraw") sendTweet(req); 
+        if (req.action === "proposedraw") sendTweet(req); 
+        if (req.action === "declinedraw") sendTweet(req); 
       }
   });
 }
@@ -539,7 +530,7 @@ function deleteGame(req){
         else if(req.action === "forfeit"){
           sendTweet(req); 
         }
-        else if(req.action === "adraw"){
+        else if(req.action === "acceptdraw"){
           sendTweet(req); 
         }
       }
@@ -553,9 +544,9 @@ function sendTweet(req){
     text = `@${req.user_screen_name} @${req.target_screen_name} ${req.user_name}`;
     if(req.action === "invite") text += ` has invited you to a game of chess.  Reply with "accept" to start a game.`;
     else if(req.action === "forfeit") text += ` has forfeited the game.`;
-    else if(req.action === "pdraw") text += ` has proposed a draw.  Reply with "adraw" to accept.  Reply with "ddraw" to decline.`;
-    else if(req.action === "adraw") text += ` has accepted your draw proposal.`;
-    else if(req.action === "ddraw") text += ` has declined your draw proposal.`;
+    else if(req.action === "proposedraw") text += ` has proposed a draw.  Reply with "acceptdraw" to accept.  Reply with "declinedraw" to decline.`;
+    else if(req.action === "acceptdraw") text += ` has accepted your draw proposal.`;
+    else if(req.action === "declinedraw") text += ` has declined your draw proposal.`;
   }
   text += ` ${randomString()}`;
   var status = {
@@ -603,14 +594,6 @@ function sendBoard(req){
     });
   });
 }
-/*
-var game = {
-    id_str_pair: "foo-bar",
-    board: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
-    state: "waitingAccept"
-}
-var screen_names = ["rephenryclay", "csci4300"];
-*/
 //getRateLimit();
 //getMostRecentMention();
 getLastProcessedTweet();
@@ -619,27 +602,6 @@ getLastProcessedTweet();
 //getid_str(screen_names, getGame, game);
 //setInterval(getRateLimit, 10000);
 setInterval(getMentions, 15000);
-//acceptInvite();
-var invite = require("./invite.json");
-var accept = require("./accept.json");
-var move1 = require("./move1.json");
-var invalidMove = require("./invalidMove.json");
-var move2 = require("./move2.json");
-
-/*
-setTimeout(() => {
-  parseMention(invite)
-}, 5000);
-setTimeout(() => {
-  parseMention(accept)
-}, 10000);
-setTimeout(() => {
-  parseMention(move1)
-}, 15000);
-setTimeout(() => {
-  parseMention(move2)
-}, 20000);
-*/
 app.use(express.static(__dirname + "/public"));
 app.get("/fen", function(req, res) {
   res.contentType("application/json");
