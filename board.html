@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+  <head>
+  </head>
+  <body>
+    <!--
+    <p id="test"><p>
+    -->
+    <div id="board" style="width: 400px">
+    </div>
+    <link rel="stylesheet" href="chessboardjs-0.3.0/css/chessboard-0.3.0.css"/>
+    <script src="chessboardjs-0.3.0/js/chessboard-0.3.0.js"></script>
+    <script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/json3/3.2.4/json3.min.js"></script>
+    <script>
+      function init(position){
+        console.log(window.location.search.substring(1));
+        var params = window.location.search.substring(1);
+        var fen = params.substring(params.indexOf("=") + 1, params.indexOf("&"));
+        fen = decodeURIComponent(fen);
+        var player = params.substring(params.indexOf("&") + 1); 
+        player = player.substring(player.indexOf("=") + 1);
+        if (player === "b") player = "black";
+        else player = "white";
+        console.log(fen);
+        console.log(player);
+        var cfg = {
+          orientation: player,
+          pieceTheme: "chessboardjs-0.3.0/img/chesspieces/wikipedia/{piece}.png",
+          position: fen
+        };
+        var board = ChessBoard('board', cfg);
+      }
+
+      /*
+      function getData(){
+        $.getJSON( "http://127.0.0.1:3000/fen", function( data ) {
+          init(data); 
+          console.log(data);
+          var parsedData = data;
+            $("#CDCstats").html(data.meta.view.description);
+            console.log(data.meta.view.description);
+              console.log(parsedData);
+        })
+      }
+      */
+
+      //$(document).ready(getData());
+      $(document).ready(init());
+    </script>
+  </body>
+</html>

@@ -1,0 +1,10 @@
+chessbot9000TwitterCreds.json
+rephenryclayTwitterCreds.json
+thiccthot33TwitterCreds.json
+deleteAllTweets.js
+test.js
+node_modules/
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml

@@ -1,0 +1,19 @@
+{
+  "name": "chess",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "ejs": "latest",
+    "aws-sdk": "latest",
+    "express": "latest",
+    "twitter": "latest",
+    "webshot": "latest",
+    "chess.js": "latest",
+    "twitter": "latest",
+    "colors": "latest",
+    "fs": "latest"
+  },
+  "scripts": {
+    "start": "node tchess.js"
+  }
+}
