@@ -3,15 +3,14 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "ejs": "latest",
-    "aws-sdk": "latest",
-    "express": "latest",
-    "twitter": "latest",
-    "webshot": "latest",
+    "aws-sdk": "^2.233.1",
     "chess.js": "latest",
+    "colors": "^1.2.4",
+    "ejs": "latest",
+    "express": "^4.16.3",
+    "fs": "latest",
     "twitter": "latest",
-    "colors": "latest",
-    "fs": "latest"
+    "webshot": "latest"
   },
   "scripts": {
     "start": "node tchess.js"
