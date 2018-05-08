@@ -3,9 +3,6 @@
   <head>
   </head>
   <body>
-    <!--
-    <p id="test"><p>
-    -->
     <div id="board" style="width: 400px">
     </div>
     <link rel="stylesheet" href="chessboardjs-0.3.0/css/chessboard-0.3.0.css"/>
@@ -31,21 +28,6 @@
         };
         var board = ChessBoard('board', cfg);
       }
-
-      /*
-      function getData(){
-        $.getJSON( "http://127.0.0.1:3000/fen", function( data ) {
-          init(data); 
-          console.log(data);
-          var parsedData = data;
-            $("#CDCstats").html(data.meta.view.description);
-            console.log(data.meta.view.description);
-              console.log(parsedData);
-        })
-      }
-      */
-
-      //$(document).ready(getData());
       $(document).ready(init());
     </script>
   </body>
