@@ -437,7 +437,6 @@ function doMove(req){
     req.userColor = userColor;
     req.targetColor = targetColor;
     if(chess.turn() !== userColor){
-      //TODO Tweet at user
       console.log("out of turn move".red);
       req.userError = "invalid move: out of turn move";
       sendTweet(req);
@@ -457,9 +456,8 @@ function doMove(req){
       req.game.gameOver = chess.game_over();
     }
     else{
-      //TODO Tweet at user
       console.log("invalid move".red);
-      req.userError = "invalid move";
+      req.userError = "Invalid move. Moves consist of the StartPosition-EndPosition. For example, in the start position b2-b4 moves a white pawn.";
       sendTweet(req);
       return;
     }
